@@ -1,0 +1,168 @@
+/* --- GLOBAL RESET & FONTS --- */
+:root {
+    --primary: #004d40;
+    --primary-light: #00695c;
+    --accent: #00e676;
+    --bg-color: #f4f7f6;
+    --card-bg: #ffffff;
+    --text-dark: #1a1a1a;
+    --text-light: #f5f5f5;
+    --run-4: #2979ff;
+    --run-6: #d500f9;
+    --wicket: #d32f2f;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+}
+
+.app-container {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #fff;
+    min-height: 100vh;
+    padding-bottom: 20px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.1);
+}
+
+/* --- HEADER (Gradient) --- */
+.header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    padding: 15px 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,77,64,0.3);
+}
+
+.header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.app-title { font-weight: 700; font-size: 16px; letter-spacing: 1px; }
+.history-btn { background: rgba(255,255,255,0.2); border: none; color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; }
+
+.match-banner { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+.team-box { text-align: center; font-weight: 700; font-size: 24px; font-family: 'Rajdhani', sans-serif; }
+.vs-badge { background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 50%; font-size: 12px; font-weight: bold; }
+
+/* --- SCORECARD (Hero Section) --- */
+.score-card-section { margin-top: -10px; padding: 15px; }
+
+.innings-tabs { display: flex; justify-content: space-between; margin-bottom: 10px; background: white; padding: 5px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.tab { padding: 8px 15px; font-size: 12px; color: #666; border-radius: 8px; cursor: pointer; transition: 0.3s; flex: 1; text-align: center; }
+.tab.active { background: var(--primary); color: white; font-weight: 600; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+
+.main-score-box {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    border: 1px solid #eee;
+}
+
+.batting-indicator { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 5px; }
+.big-score { font-family: 'Rajdhani', sans-serif; font-size: 56px; font-weight: 700; color: var(--text-dark); line-height: 1; }
+.stats-row { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
+.stat-pill { background: #f0f2f5; padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; color: #555; }
+.trail-text { margin-top: 8px; font-size: 12px; color: var(--wicket); font-weight: 600; }
+
+/* --- PLAYERS CARDS --- */
+.players-area { padding: 0 15px; }
+.player-card {
+    background: white;
+    padding: 12px 15px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    border-left: 5px solid transparent;
+    transition: transform 0.1s;
+}
+.player-card:active { transform: scale(0.98); }
+
+.player-card.active-striker { border-left: 5px solid var(--accent); background: linear-gradient(to right, #e8f5e9, #fff); }
+.player-card.bowler-theme { border-left: 5px solid var(--primary); }
+
+.card-row { display: flex; justify-content: space-between; align-items: center; }
+.top { margin-bottom: 5px; }
+.p-name { font-weight: 600; font-size: 15px; color: #333; }
+.p-score { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; color: #000; }
+.bottom { font-size: 12px; color: #777; }
+.c-4 { color: var(--run-4); font-weight: 600; }
+.c-6 { color: var(--run-6); font-weight: 600; }
+
+/* --- CURRENT OVER --- */
+.this-over-section { padding: 10px 20px; margin-top: 10px; }
+.label { font-size: 11px; font-weight: 700; color: #999; letter-spacing: 1px; display: block; margin-bottom: 8px; }
+.ball-container { display: flex; overflow-x: auto; padding-bottom: 5px; }
+.ball-container span {
+    min-width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    background: #e0e0e0;
+    border-radius: 50%;
+    margin-right: 8px;
+    font-weight: 700; font-size: 12px; color: #444;
+    box-shadow: inset 0 -2px 5px rgba(0,0,0,0.1);
+}
+
+/* --- KEYPAD CONTROLS --- */
+.control-panel { background: white; padding: 20px; border-top-left-radius: 25px; border-top-right-radius: 25px; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); }
+
+.runs-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 15px; }
+.btn-run {
+    height: 45px; border-radius: 10px; border: none;
+    background: #f5f5f5; color: #333; font-weight: 700; font-size: 18px;
+    box-shadow: 0 3px 0 #ddd; cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+}
+.btn-run:active { box-shadow: 0 0 0 #ddd; transform: translateY(3px); }
+.r-4 { background: var(--run-4); color: white; box-shadow: 0 3px 0 #004ba0; }
+.r-6 { background: var(--run-6); color: white; box-shadow: 0 3px 0 #9c00c3; }
+
+.extras-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 15px; }
+.btn-extra { padding: 10px; border: 1px solid #ddd; background: white; border-radius: 8px; font-weight: 600; font-size: 12px; color: #666; }
+
+.actions-grid { display: flex; gap: 10px; }
+.btn-action { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 600; color: white; font-size: 13px; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.btn-out { background: var(--wicket); }
+.btn-swap { background: #546e7a; }
+.btn-declare { background: #37474f; }
+
+/* --- MODALS (Glassmorphism) --- */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center; z-index: 1000;
+}
+.glass-modal {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 20px;
+    width: 85%; max-width: 320px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.glass-modal h3 { margin-bottom: 20px; color: var(--primary); }
+.glass-modal input, .glass-modal select {
+    width: 100%; padding: 12px; margin-bottom: 12px;
+    border: 1px solid #eee; background: #f9f9f9; border-radius: 8px;
+    font-size: 14px; outline: none;
+}
+.glass-modal input:focus { border-color: var(--accent); background: white; }
+
+.btn-grad {
+    width: 100%; padding: 12px; border: none; border-radius: 8px;
+    background: linear-gradient(to right, var(--primary), var(--primary-light));
+    color: white; font-weight: 600; margin-top: 10px;
+}
+.btn-danger { width: 100%; padding: 12px; background: var(--wicket); color: white; border: none; border-radius: 8px; font-weight: 600; }
+.btn-text { background: none; border: none; color: #888; margin-top: 10px; font-size: 12px; }
+
+/* --- History Styles --- */
+.history-item {
+    background: white; padding: 15px; margin-bottom: 10px;
+    border-radius: 10px; border-left: 4px solid var(--primary);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pro Cricket Scorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app-container" id="mainContainer">
+    <div class="header">
+        <div class="header-top">
+            <div class="app-title">🏏 TEST CHAMPIONSHIP</div>
+            <button class="history-btn" onclick="showHistory()">HISTORY</button>
+        </div>
+        <div class="match-banner">
+            <div class="team-box">
+                <span class="team-name" id="team1Name">IND</span>
+            </div>
+            <div class="vs-badge">VS</div>
+            <div class="team-box">
+                <span class="team-name" id="team2Name">AUS</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="score-card-section">
+        <div class="innings-tabs">
+            <div class="tab active" onclick="switchInning(1)" data-innings="1">1st</div>
+            <div class="tab" onclick="switchInning(2)" data-innings="2">2nd</div>
+            <div class="tab" onclick="switchInning(3)" data-innings="3">3rd</div>
+            <div class="tab" onclick="switchInning(4)" data-innings="4">4th</div>
+        </div>
+
+        <div class="main-score-box">
+            <div class="batting-indicator" id="battingTeam">Batting Team</div>
+            <div class="score-row">
+                <span class="big-score" id="mainScore">0/0</span>
+            </div>
+            <div class="stats-row">
+                <div class="stat-pill">OVERS: <span id="overs">0.0</span></div>
+                <div class="stat-pill">CRR: <span id="runRate">0.00</span></div>
+            </div>
+            <div class="trail-text" id="trail"></div>
+        </div>
+    </div>
+
+    <div class="players-area">
+        <div class="player-card active-striker" onclick="showBatsmanModal('striker')">
+            <div class="card-row top">
+                <span class="p-name">🏏 <span id="striker-name">Striker</span></span>
+                <span class="p-score" id="striker-score">0</span>
+            </div>
+            <div class="card-row bottom">
+                <span class="p-details">balls: <b id="striker-balls">0</b></span>
+                <span class="p-boundaries"><span class="c-4">4s: <b id="striker-fours">0</b></span> <span class="c-6">6s: <b id="striker-sixes">0</b></span></span>
+            </div>
+        </div>
+
+        <div class="player-card" onclick="showBatsmanModal('nonstriker')">
+            <div class="card-row top">
+                <span class="p-name"><span id="nonstriker-name">Non-Striker</span></span>
+                <span class="p-score" id="nonstriker-score">0</span>
+            </div>
+            <div class="card-row bottom">
+                <span class="p-details">balls: <b id="nonstriker-balls">0</b></span>
+                <span class="p-boundaries">4s: <b id="nonstriker-fours">0</b> 6s: <b id="nonstriker-sixes">0</b></span>
+            </div>
+        </div>
+
+        <div class="player-card bowler-theme" onclick="showBowlerModal()">
+            <div class="card-row top">
+                <span class="p-name">⚾ <span id="bowler-name">Bowler</span></span>
+                <span class="p-score" id="bowler-figures">0/0</span>
+            </div>
+            <div class="card-row bottom">
+                <span>Ov: <b id="bowler-overs">0.0</b></span>
+                <span>Md: <b id="bowler-maidens">0</b></span>
+                <span>Eco: <b id="bowler-econ">0.0</b></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="this-over-section">
+        <span class="label">THIS OVER</span>
+        <div class="ball-container" id="currentOver"></div>
+    </div>
+
+    <div class="control-panel">
+        <div class="runs-grid">
+            <button class="btn-run r-0" onclick="addRuns(0)">•</button>
+            <button class="btn-run r-1" onclick="addRuns(1)">1</button>
+            <button class="btn-run r-2" onclick="addRuns(2)">2</button>
+            <button class="btn-run r-3" onclick="addRuns(3)">3</button>
+            <button class="btn-run r-4" onclick="addRuns(4)">4</button>
+            <button class="btn-run r-6" onclick="addRuns(6)">6</button>
+        </div>
+
+        <div class="extras-grid">
+            <button class="btn-extra" onclick="addExtra('wide')">WD</button>
+            <button class="btn-extra" onclick="addExtra('no-ball')">NB</button>
+            <button class="btn-extra" onclick="addExtra('bye')">BYE</button>
+            <button class="btn-extra" onclick="addExtra('leg-bye')">LB</button>
+        </div>
+
+        <div class="actions-grid">
+            <button class="btn-action btn-out" onclick="showWicketModal()">OUT</button>
+            <button class="btn-action btn-swap" onclick="swapStrike()">SWAP</button>
+            <button class="btn-action btn-undo" onclick="undoLastBall()">UNDO ↺</button>
+            <button class="btn-action btn-declare" onclick="declareInnings()">DEC</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="setupModal" style="display: flex;">
+    <div class="glass-modal">
+        <h3>Match Setup</h3>
+        <input type="text" id="team1Input" placeholder="Home Team" value="India">
+        <input type="text" id="team2Input" placeholder="Away Team" value="Australia">
+        <div class="row" style="display:flex; gap:10px; margin-bottom:10px;">
+            <select id="tossWinner" style="flex:1;"><option value="team1">Team A</option><option value="team2">Team B</option></select>
+            <select id="electedTo" style="flex:1;"><option value="bat">Bat</option><option value="bowl">Bowl</option></select>
+        </div>
+        <input type="text" id="initStriker" placeholder="Striker Name">
+        <input type="text" id="initNonStriker" placeholder="Non-Striker Name">
+        <input type="text" id="initBowler" placeholder="Bowler Name">
+        <button class="btn-grad" onclick="startMatch()">LET'S PLAY</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="bowlerModal">
+    <div class="glass-modal">
+        <h3>New Bowler</h3>
+        <input type="text" id="newBowlerName" placeholder="Enter Name">
+        <button class="btn-grad" onclick="addNewBowler()">Start Over</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="batsmanModal">
+    <div class="glass-modal">
+        <h3>New Batsman</h3>
+        <input type="hidden" id="batsmanTypeToChange">
+        <input type="text" id="newBatsmanName" placeholder="Enter Name">
+        <button class="btn-grad" onclick="addNewBatsman()">Update</button>
+        <button class="btn-text" onclick="closeBatsmanModal()">Cancel</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="wicketModal">
+    <div class="glass-modal wicket-theme">
+        <h3>WICKET! ☝️</h3>
+        <select id="outBatsman"><option value="striker">Striker Out</option><option value="nonstriker">Non-Striker Out</option></select>
+        <input type="text" id="newBatsmanAfterWicket" placeholder="Next Batsman">
+        <button class="btn-danger" onclick="confirmWicket()">CONFIRM OUT</button>
+        <button class="btn-text" onclick="closeWicketModal()">Cancel</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="overCompleteOverlay" style="background: rgba(0,0,0,0.85); z-index: 2000;">
+    <div class="glass-modal">
+        <h2 style="color:#4CAF50; font-size: 24px;">OVER COMPLETE</h2>
+        <p style="color:#666;">Change Ends</p>
+        <button class="btn-grad" onclick="acknowledgeOver()">CONTINUE</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="resultModal">
+    <div class="glass-modal" style="border-left: 5px solid #FFD700;">
+        <h3>MATCH FINISHED! 🏆</h3>
+        <input type="text" id="matchResultInput" placeholder="e.g. India Won by 10 runs">
+        <button class="btn-grad" onclick="saveMatchRecord()" style="background: linear-gradient(to right, #FFD700, #FFA500); color: black;">SAVE & EXIT</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="scorecardModal">
+    <div class="glass-modal wide" style="width: 95%; max-width: 400px;">
+        <h3>Full Scorecard <span onclick="closeScorecard()" style="float:right; cursor:pointer;">&times;</span></h3>
+        <div id="scorecardContent" style="text-align: left; max-height: 400px; overflow-y: auto;"></div>
+    </div>
+</div>
+
+<div class="app-container" id="historyContainer" style="display: none; background: #f4f7f6;">
+    <div class="header">
+        <div class="header-top">
+            <div class="app-title">Match History</div>
+            <button class="history-btn" onclick="hideHistory()">Back</button>
+        </div>
+    </div>
+    <div id="historyList" style="padding: 15px;"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
